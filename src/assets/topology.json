@@ -3,6 +3,7 @@
     {
       "hostname": "ABC-1",
       "group": "ABC",
+      "type": "firewall",
       "x-level": 1,
       "y-level": 1,
       "interfaces": [
@@ -23,6 +24,7 @@
     {
       "hostname": "ABC-2",
       "group": "ABC",
+      "type": "switch",
       "x-level": 2,
       "y-level": 1,
       "interfaces": [
@@ -43,6 +45,7 @@
     {
       "hostname": "XYZ-1",
       "group": "XYZ",
+      "type": "router",
       "x-level": 1,
       "y-level": 1,
       "interfaces": [
@@ -59,25 +62,6 @@
           "zone": "xyz"
         }
       ]
-    },
-    {
-      "hostname": "XYZ-2",
-      "x-level": 1,
-      "y-level": 2,
-      "interfaces": [
-        {
-          "name": "XYZ2-if-1",
-          "ip": "1.1.1.1",
-          "status": "up",
-          "zone": "abc"
-        },
-        {
-          "name": "XYZ2-if-2",
-          "ip": "1.1.1.2",
-          "status": "up",
-          "zone": "xyz"
-        }
-      ]
     }
   ],
   "device_group": [
@@ -89,7 +73,7 @@
     },
     {
       "name": "XYZ",
-      "devices": ["XYZ-1", "XYZ-2"],
+      "devices": ["XYZ-1"],
       "x-level": 2,
       "y-level": 1
     }

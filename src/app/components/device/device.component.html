@@ -6,10 +6,16 @@
   (dragstart)="onDragStart($event)"
 >
   <div class="device-rectangle">
-    <div class="device-label">{{ device.hostname }}</div>
+    <div class="device-header">
+      <fa-icon
+        [icon]="getDeviceIcon()"
+        class="device-icon"
+        [title]="device.type || 'Unknown Device Type'"
+      ></fa-icon>
+      <div class="device-label">{{ device.hostname }}</div>
+    </div>
   </div>
 
-  <!-- Interface squares attached directly below device rectangle -->
   <div class="interfaces-container">
     <div
       *ngFor="let networkInterface of device.interfaces; let i = index"

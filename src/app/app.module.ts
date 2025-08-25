@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop'; // Add this
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { TopologyComponent } from './components/topology/topology.component';
@@ -20,7 +21,13 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     InterfaceComponent,
     SidebarComponent,
   ],
-  imports: [BrowserModule, HttpClientModule, FormsModule, DragDropModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    DragDropModule,
+    FontAwesomeModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

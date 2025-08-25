@@ -10,6 +10,7 @@ export interface NetworkInterface {
 export interface Device {
   hostname: string;
   group: string;
+  type?: string; // Add this for device type (firewall, switch, router, etc.)
   interfaces: NetworkInterface[];
   x?: number;
   y?: number;
