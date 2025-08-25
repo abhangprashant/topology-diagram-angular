@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  overflow: hidden;
+  line-height: 1.6;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+// Prevent text selection during drag operations
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// Smooth transitions for interactive elements
+.interactive {
+  transition: all 0.2s ease;
+}

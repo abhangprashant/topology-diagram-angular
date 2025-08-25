@@ -1,0 +1,25 @@
+{
+  "connections": [
+    {
+      "source_device": "ABC-1",
+      "source_interface": "ABC1-if-1",
+      "destination_device": "XYZ-1",
+      "destination_interface": "XYZ1-if-1",
+      "label": "CONN-001"
+    },
+    {
+      "source_device": "ABC-2",
+      "source_interface": "ABC2-if-2",
+      "destination_device": "XYZ-1",
+      "destination_interface": "XYZ1-if-2",
+      "label": "CONN-002"
+    },
+    {
+      "source_device": "ABC-1",
+      "source_interface": "ABC1-if-2",
+      "destination_device": "ABC-2",
+      "destination_interface": "ABC2-if-1",
+      "label": "CONN-003"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "flows": [
+    {
+      "id": "FLOW-001",
+      "name": "Multi-Path Web Traffic",
+      "source": "ABC-1",
+      "destination": "XYZ-1",
+      "connection_labels": ["CONN-001", "CONN-002"],
+      "status": "approved",
+      "bandwidth": "200Mbps",
+      "protocol": "HTTP/HTTPS"
+    },
+    {
+      "id": "FLOW-002",
+      "name": "Database Sync Flow",
+      "source": "ABC-2",
+      "destination": "XYZ-1",
+      "connection_labels": ["CONN-002"],
+      "status": "pending",
+      "bandwidth": "50Mbps",
+      "protocol": "TCP"
+    },
+    {
+      "id": "FLOW-003",
+      "name": "Internal Backup Flow",
+      "source": "ABC-1",
+      "destination": "ABC-2",
+      "connection_labels": ["CONN-003"],
+      "status": "rejected",
+      "bandwidth": "100Mbps",
+      "protocol": "FTP"
+    },
+    {
+      "id": "FLOW-004",
+      "name": "Complex Multi-Hop Flow",
+      "source": "ABC-1",
+      "destination": "XYZ-1",
+      "connection_labels": ["CONN-001", "CONN-002", "CONN-003"],
+      "status": "approved",
+      "bandwidth": "500Mbps",
+      "protocol": "Multi-Protocol"
+    }
+  ]
+}

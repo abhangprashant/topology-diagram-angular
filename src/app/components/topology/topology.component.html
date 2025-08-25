@@ -1,0 +1,107 @@
+<div
+  class="topology-container"
+  (drop)="onDeviceDrop($event)"
+  (dragover)="onDragOver($event)"
+>
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading topology data...</p>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="topology-controls">
+    <button
+      class="btn-auto-arrange"
+      (click)="autoArrangeGroups()"
+      [disabled]="isLoading"
+    >
+      Auto Arrange Groups
+    </button>
+    <button
+      class="btn-refresh-sizes"
+      (click)="refreshGroupSizes()"
+      [disabled]="isLoading"
+    >
+      Refresh Sizes
+    </button>
+    <button
+      class="btn-recalculate"
+      (click)="recalculatePositions()"
+      [disabled]="isLoading"
+    >
+      Recalculate All
+    </button>
+    <button class="btn-reload" (click)="reloadData()" [disabled]="isLoading">
+      Reload Data
+    </button>
+  </div>
+
+  <div class="topology-canvas" *ngIf="topologyData && !isLoading">
+    <!-- Device Groups positioned to avoid overlap -->
+    <app-device-group
+      *ngFor="let group of topologyData.device_group"
+      [deviceGroup]="group"
+      [devicesInGroup]="getDevicesInGroup(group)"
+      (groupPositionChanged)="onGroupPositionChanged($event)"
+    ></app-device-group>
+
+    <!-- Standalone devices positioned below groups -->
+    <ng-container *ngFor="let device of topologyData.devices">
+      <app-device
+        [device]="device"
+        *ngIf="!isDeviceInAnyGroup(device.hostname)"
+      ></app-device>
+    </ng-container>
+  </div>
+
+  <!-- SVG overlay with clean connection lines -->
+  <svg
+    class="svg-overlay"
+    [attr.width]="svgWidth"
+    [attr.height]="svgHeight"
+    *ngIf="!isLoading"
+  >
+    <defs>
+      <marker
+        id="arrowhead"
+        viewBox="0 0 10 10"
+        refX="9"
+        refY="3"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto"
+        markerUnits="strokeWidth"
+      >
+        <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+      </marker>
+      <marker
+        id="selected-arrowhead"
+        viewBox="0 0 10 10"
+        refX="9"
+        refY="3"
+        markerWidth="6"
+        markerHeight="6"
+        orient="auto"
+        markerUnits="strokeWidth"
+      >
+        <path d="M0,0 L0,6 L9,3 z" fill="yellow" />
+      </marker>
+    </defs>
+
+    <!-- Clean connection lines with flow-based coloring -->
+    <path
+      *ngFor="let connection of topologyData?.connection"
+      [attr.d]="getConnectionPath(connection)"
+      [attr.stroke]="getConnectionStrokeColor(connection)"
+      [attr.stroke-width]="connection.selected ? 3 : 2"
+      [attr.marker-end]="
+        connection.selected ? 'url(#selected-arrowhead)' : 'url(#arrowhead)'
+      "
+      fill="none"
+      stroke-linecap="round"
+    ></path>
+  </svg>
+</div>

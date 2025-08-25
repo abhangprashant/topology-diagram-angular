@@ -1,0 +1,22 @@
+<div
+  class="device-group-container"
+  [style.left.px]="deviceGroup.x || 0"
+  [style.top.px]="deviceGroup.y || 0"
+  [style.width.px]="deviceGroup.width || 300"
+  [style.height.px]="deviceGroup.height || 200"
+  (mousedown)="onMouseDown($event)"
+>
+  <div class="group-background"></div>
+  <div class="group-label">{{ deviceGroup.name }}</div>
+
+  <!-- Devices positioned using their individual x-level and y-level within group -->
+  <ng-container *ngFor="let device of devicesInGroup; let i = index">
+    <app-device
+      [device]="device"
+      [style.position]="'absolute'"
+      [style.left.px]="getDevicePositionInGroup(i, device).x"
+      [style.top.px]="getDevicePositionInGroup(i, device).y"
+      (mousedown)="onDeviceMouseDown($event)"
+    ></app-device>
+  </ng-container>
+</div>

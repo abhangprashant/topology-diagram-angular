@@ -1,0 +1,32 @@
+.interface-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 15; // Higher than device
+
+  .interface-square {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #333;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-width: 2px;
+      transform: scale(1.1);
+    }
+  }
+
+  .interface-label {
+    font-size: 8px;
+    color: #333;
+    margin-top: 2px;
+    text-align: center;
+    max-width: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

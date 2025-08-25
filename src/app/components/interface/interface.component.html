@@ -1,0 +1,13 @@
+<div
+  class="interface-container"
+  [style.left.px]="position.x"
+  [style.top.px]="position.y"
+>
+  <div
+    class="interface-square"
+    [style.background-color]="color"
+    [title]="networkInterface.name + ' (' + networkInterface.ip + ')'"
+    (click)="onClick()"
+  ></div>
+  <div class="interface-label">{{ networkInterface.name }}</div>
+</div>

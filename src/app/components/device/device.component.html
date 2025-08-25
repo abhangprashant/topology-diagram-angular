@@ -1,0 +1,21 @@
+<div
+  class="device-container"
+  [style.left.px]="device.x || 0"
+  [style.top.px]="device.y || 0"
+  draggable="true"
+  (dragstart)="onDragStart($event)"
+>
+  <div class="device-rectangle">
+    <div class="device-label">{{ device.hostname }}</div>
+  </div>
+
+  <!-- Interface squares attached directly below device rectangle -->
+  <div class="interfaces-container">
+    <div
+      *ngFor="let networkInterface of device.interfaces; let i = index"
+      class="interface-square"
+      [style.background-color]="getInterfaceColor(networkInterface.name)"
+      [title]="networkInterface.name + ' (' + networkInterface.ip + ')'"
+    ></div>
+  </div>
+</div>

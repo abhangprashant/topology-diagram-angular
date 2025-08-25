@@ -1,0 +1,166 @@
+<div class="sidebar" [style.width.px]="sidebarWidth">
+  <!-- Resize handle -->
+  <div
+    class="resize-handle"
+    cdkDrag
+    (cdkDragStarted)="onResizeStart()"
+    (cdkDragMoved)="onResize($event)"
+    (cdkDragEnded)="onResizeEnd()"
+    [class.resizing]="isResizing"
+  >
+    <div class="resize-indicator"></div>
+  </div>
+
+  <!-- Loading indicator -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>Loading flows...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <!-- Sidebar header -->
+    <div class="sidebar-header">
+      <h3>Flow Management</h3>
+      <div class="header-controls">
+        <button class="btn-reset" (click)="resetWidth()" title="Reset width">
+          ↔
+        </button>
+        <button class="btn-deselect" (click)="onDeselectAll()">
+          Deselect All
+        </button>
+      </div>
+    </div>
+
+    <!-- Flow statistics -->
+    <div class="flow-stats">
+      <div class="stat-item approved">
+        <span class="stat-icon">✓</span>
+        <span class="stat-count">{{ approvedFlows.length }}</span>
+        <span class="stat-label">Approved</span>
+      </div>
+      <div class="stat-item pending">
+        <span class="stat-icon">⏳</span>
+        <span class="stat-count">{{ pendingFlows.length }}</span>
+        <span class="stat-label">Pending</span>
+      </div>
+      <div class="stat-item rejected">
+        <span class="stat-icon">✗</span>
+        <span class="stat-count">{{ rejectedFlows.length }}</span>
+        <span class="stat-label">Rejected</span>
+      </div>
+    </div>
+
+    <!-- Flow table -->
+    <div class="flows-table-container">
+      <table class="flows-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Flow ID</th>
+            <th>Name</th>
+            <th>Source</th>
+            <th>Destination</th>
+            <th>Connections</th>
+            <th>Bandwidth</th>
+            <th>Protocol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let flow of flows"
+            class="flow-row"
+            [class.selected]="flow.selected"
+            [class.approved]="flow.status === 'approved'"
+            [class.pending]="flow.status === 'pending'"
+            [class.rejected]="flow.status === 'rejected'"
+            (click)="onFlowSelect(flow)"
+          >
+            <td class="status-cell">
+              <span
+                class="status-indicator"
+                [style.color]="getStatusColor(flow.status)"
+                [title]="flow.status"
+              >
+                {{ getStatusIcon(flow.status) }}
+              </span>
+            </td>
+            <td class="flow-id">{{ flow.id }}</td>
+            <td class="flow-name">{{ flow.name }}</td>
+            <td class="source">{{ flow.source }}</td>
+            <td class="destination">{{ flow.destination }}</td>
+            <td class="connections">
+              <span class="connection-count">{{
+                flow.connection_labels.length
+              }}</span>
+              <div
+                class="connection-labels"
+                *ngIf="flow.connection_labels.length > 1"
+              >
+                <span
+                  *ngFor="let label of flow.connection_labels"
+                  class="connection-label"
+                  [title]="label"
+                >
+                  {{ label }}
+                </span>
+              </div>
+            </td>
+            <td class="bandwidth">{{ flow.bandwidth || "N/A" }}</td>
+            <td class="protocol">{{ flow.protocol || "N/A" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Selected flow details -->
+    <div *ngIf="selectedFlow" class="flow-details">
+      <h4>Flow Details</h4>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Flow ID:</label>
+          <span>{{ selectedFlow.id }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Name:</label>
+          <span>{{ selectedFlow.name }}</span>
+        </div>
+        <div class="detail-item">
+          <label>Status:</label>
+          <span
+            class="status-badge"
+            [style.background-color]="getStatusColor(selectedFlow.status)"
+          >
+            {{ selectedFlow.status | titlecase }}
+          </span>
+        </div>
+        <div class="detail-item">
+          <label>Connections:</label>
+          <div class="connections-list">
+            <span
+              *ngFor="let label of selectedFlow.connection_labels"
+              class="connection-tag"
+            >
+              {{ label }}
+            </span>
+          </div>
+        </div>
+        <div class="detail-item">
+          <label>Path:</label>
+          <span
+            >{{ selectedFlow.source }} → {{ selectedFlow.destination }}</span
+          >
+        </div>
+        <div class="detail-item" *ngIf="selectedFlow.bandwidth">
+          <label>Bandwidth:</label>
+          <span>{{ selectedFlow.bandwidth }}</span>
+        </div>
+        <div class="detail-item" *ngIf="selectedFlow.protocol">
+          <label>Protocol:</label>
+          <span>{{ selectedFlow.protocol }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="flows.length === 0" class="no-flows">No flows available</div>
+  </div>
+</div>
